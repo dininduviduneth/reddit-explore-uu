@@ -23,14 +23,15 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV HOME /root
 
 # Install Java.
-RUN \
+# RUN \
   # echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   # add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get -y upgrade && \ 
-  apt-get install -y openjdk-11-jdk-headless && \
-  apt-get install -y net-tools && \
-  rm -rf /var/lib/apt/lists/* && \
+RUN apt-get update && 
+RUN apt-get -y upgrade &&  
+RUN apt-get install -y apt-utils && 
+RUN apt-get install -y openjdk-11-jdk-headless && 
+RUN apt-get install -y net-tools && 
+RUN rm -rf /var/lib/apt/lists/* && 
   # rm -rf /var/cache/oracle-jdk8-installer
 
 # Define commonly used JAVA_HOME variable
