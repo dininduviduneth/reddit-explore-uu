@@ -17,8 +17,8 @@ RUN mkdir -p $HADOOP_HOME/hadoop_data/hdfs/namenode && \
     mkdir $HADOOP_HOME/hadoop_data/hdfs/tmp
 COPY core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
 COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-COPY start-hdfs.sh /start-hdfs.sh
-COPY stop-hdfs.sh /stop-hdfs.sh
+COPY /usr/local/hadoop/sbin/start-hdfs.sh /start-hdfs.sh
+COPY /usr/local/hadoop/sbin/stop-hdfs.sh /stop-hdfs.sh
 RUN chmod +x /start-hdfs.sh && \
     chmod +x /stop-hdfs.sh
 
