@@ -2,6 +2,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update && \
     apt-get -y upgrade && \
+    apt-get -y install apt-utils && \
     apt-get -y install openjdk-8-jre-headless scala wget screen ssh
 
 # Install Hadoop
