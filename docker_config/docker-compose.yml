@@ -111,15 +111,6 @@ services:
         aliases:
           - hdfs-dn-b
 
-  datascience-notebook:
-    image: jupyter/minimal-notebook
-    volumes:
-      - hdfs-nn-data:/hadoop/hdfs/data:ro
-    ports:
-      - "8888:8888"
-      - "8889:8889"
-    container_name: jupyter_notebook
-
 volumes:
   hdfs-nn-data:
   hdfs-nn-checkpoint:
