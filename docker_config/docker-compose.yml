@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   spark-master:
-    build: docker_config/spark-master/
+    build: spark-master/
     ports:
       - "9090:8080"
       - "7077:7077"
@@ -22,7 +22,7 @@ services:
           - hdfs-nn
 
   spark-worker-a:
-    build: docker_config/spark-worker/
+    build: spark-worker/
     ports:
       - "9091:8080"
       - "7000:7000"
