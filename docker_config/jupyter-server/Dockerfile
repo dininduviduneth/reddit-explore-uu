@@ -2,8 +2,8 @@ FROM ubuntu:22.04
 
 RUN apt-get update && \
     apt-get -y upgrade && \
-    apt-get -y install openjdk-8-jre-headless scala wget screen ssh \
-    apt -y install python3-pip \
+    apt-get -y install openjdk-8-jre-headless scala wget screen ssh && \
+    apt -y install python3-pip && \
     pip3 install Jupyter 
 
 # Install Spark
