@@ -112,7 +112,7 @@ services:
           - hdfs-dn-b
 
   datascience-notebook:
-    image: jupyter/datascience-notebook
+    build: jupyter-server/
     volumes:
       - hdfs-nn-data:/hadoop/hdfs/data:ro
     ports:
