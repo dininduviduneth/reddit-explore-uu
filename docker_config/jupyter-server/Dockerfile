@@ -16,4 +16,4 @@ ENV SPARK_HOME="/usr/local/spark"
 ENV SPARK_NO_DAEMONIZE="true"
 
 RUN apt -y install python3-pip
-RUN pip install Jupyter
+RUN pip install --default-timeout=100 Jupyter
