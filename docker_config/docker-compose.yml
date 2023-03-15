@@ -117,6 +117,7 @@ services:
       - hdfs-nn-data:/hadoop/hdfs/data:ro
     ports:
       - "8888:8888"
+      - "8889:8889"
     container_name: jupyter_notebook
 
 volumes:
