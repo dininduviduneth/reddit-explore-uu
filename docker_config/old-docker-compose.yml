@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   spark-master:
-    build: docker_config/spark-master/
+    image: docker.io/bitnami/spark:3.3
     ports:
       - "9090:8080"
       - "7077:7077"
@@ -22,7 +22,7 @@ services:
           - hdfs-nn
 
   spark-worker-a:
-    build: docker_config/spark-worker/
+    image: docker.io/bitnami/spark:3.3
     ports:
       - "9091:8080"
       - "7000:7000"
@@ -45,7 +45,7 @@ services:
           - hdfs-dn-a
 
   spark-worker-b:
-    build: docker_config/spark-worker/
+    image: docker.io/bitnami/spark:3.3
     ports:
       - "9092:8080"
       - "7001:7000"
@@ -119,3 +119,5 @@ volumes:
 
 networks:
   hadoop:
+
+
