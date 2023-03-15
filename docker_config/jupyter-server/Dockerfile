@@ -1,5 +1,8 @@
 FROM ubuntu:22.04
 
+ENV http_proxy http://proxy-chain.xxx.com:911/
+ENV https_proxy http://proxy-chain.xxx.com:912/
+
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get -y install openjdk-8-jre-headless scala wget screen ssh
