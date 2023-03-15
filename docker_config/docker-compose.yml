@@ -45,7 +45,7 @@ services:
           - hdfs-dn-a
 
   spark-worker-b:
-    build: docker_config/spark-worker/
+    build: spark-worker/
     ports:
       - "9092:8080"
       - "7001:7000"
