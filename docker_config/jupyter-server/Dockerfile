@@ -15,7 +15,6 @@ ENV PATH="${PATH}:/usr/local/spark/bin"
 ENV SPARK_HOME="/usr/local/spark"
 ENV SPARK_NO_DAEMONIZE="true"
 
-RUN apt -y install python3-pip && \
-    pip3 install Jupyter 
+RUN apt -y install python3-pip
 
 CMD ["bash", "-c", "python3 -m notebook --ip=* --no-browser"]
