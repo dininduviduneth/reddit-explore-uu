@@ -113,6 +113,8 @@ services:
 
   datascience-notebook:
     build: jupyter-server/
+    dns:
+      - 8.8.8.8
     volumes:
       - hdfs-nn-data:/hadoop/hdfs/data:ro
     ports:

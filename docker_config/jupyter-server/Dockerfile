@@ -16,8 +16,4 @@ ENV SPARK_HOME="/usr/local/spark"
 ENV SPARK_NO_DAEMONIZE="true"
 
 RUN apt -y install python3-pip
-
-ENV http_proxy http://proxy-chain.xxx.com:911/
-ENV https_proxy http://proxy-chain.xxx.com:912/
-
 RUN pip install --default-timeout=100 Jupyter
