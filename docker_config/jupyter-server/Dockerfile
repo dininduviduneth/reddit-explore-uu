@@ -1,8 +1,5 @@
 FROM ubuntu:22.04
 
-ENV http_proxy http://proxy-chain.xxx.com:911/
-ENV https_proxy http://proxy-chain.xxx.com:912/
-
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get -y install openjdk-8-jre-headless scala wget screen ssh
@@ -19,4 +16,8 @@ ENV SPARK_HOME="/usr/local/spark"
 ENV SPARK_NO_DAEMONIZE="true"
 
 RUN apt -y install python3-pip
+
+ENV http_proxy http://proxy-chain.xxx.com:911/
+ENV https_proxy http://proxy-chain.xxx.com:912/
+
 RUN pip install --default-timeout=100 Jupyter
