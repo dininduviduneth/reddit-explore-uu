@@ -1,0 +1,123 @@
+version: "3.3"
+services:
+  spark-master:
+    image: docker.io/bitnami/spark:3.3
+    ports:
+      - "9090:8080"
+      - "7077:7077"
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
+      - hdfs-nn-data:/hadoop/hdfs/data
+      - hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
+    environment:
+      - SPARK_WORKLOAD=master
+      - SPARK_LOCAL_IP=spark-master
+      - HADOOP_NAMENODE_HOST=hdfs-nn
+      - HADOOP_DATANODE_PORT=50010
+    networks:
+      hadoop:
+        aliases:
+          - spark-master
+          - hdfs-nn
+
+  spark-worker-a:
+    image: docker.io/bitnami/spark:3.3
+    ports:
+      - "9091:8080"
+      - "7000:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-a
+      - HADOOP_NAMENODE_HOST=hdfs-nn
+      - HADOOP_DATANODE_PORT=50010
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
+      - hdfs-dn-a-data:/hadoop/hdfs/data
+    networks:
+      hadoop:
+        aliases:
+          - spark-worker-a
+          - hdfs-dn-a
+
+  spark-worker-b:
+    image: docker.io/bitnami/spark:3.3
+    ports:
+      - "9092:8080"
+      - "7001:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-b
+      - HADOOP_NAMENODE_HOST=hdfs-nn
+      - HADOOP_DATANODE_PORT=50010
+    volumes:
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
+      - hdfs-dn-b-data:/hadoop/hdfs/data
+    networks:
+      hadoop:
+        aliases:
+          - spark-worker-b
+          - hdfs-dn-b
+
+  hdfs-nn:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    container_name: hdfs-nn
+    environment:
+      - CLUSTER_NAME=hdfs-cluster
+    volumes:
+      - hdfs-nn-data:/hadoop/hdfs/data
+      - hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
+    networks:
+      hadoop:
+        aliases:
+          - hdfs-nn
+
+  hdfs-dn-a:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: hdfs-dn-a
+    environment:
+      - CLUSTER_NAME=hdfs-cluster
+      - CORE_CONF_fs_defaultFS=hdfs://hdfs-nn:8020
+      - CORE_CONF_hadoop_http_staticuser_user=root
+    volumes:
+      - hdfs-dn-a-data:/hadoop/hdfs/data
+    networks:
+      hadoop:
+        aliases:
+          - hdfs-dn-a
+
+  hdfs-dn-b:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: hdfs-dn-b
+    environment:
+      - CLUSTER_NAME=hdfs-cluster
+      - CORE_CONF_fs_defaultFS=hdfs://hdfs-nn:8020
+      - CORE_CONF_hadoop_http_staticuser_user=root
+    volumes:
+      - hdfs-dn-b-data:/hadoop/hdfs/data
+    networks:
+      hadoop:
+        aliases:
+          - hdfs-dn-b
+
+volumes:
+  hdfs-nn-data:
+  hdfs-nn-checkpoint:
+  hdfs-dn-a-data:
+  hdfs-dn-b-data:
+
+networks:
+  hadoop:
+
+
