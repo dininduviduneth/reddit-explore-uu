@@ -21,17 +21,19 @@ services:
           - spark-master
           - hdfs-nn
 
-  spark-worker-a:
+  spark-worker:
     build: spark-worker/
     ports:
-      - "9091:8080"
-      - "7000:7000"
+      - "9090-9098:8080"
+      - "7000-7008:7000"
     depends_on:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
+      - SPARK_WORKER_MEMORY=4g
+      - SPARK_WORKER_CORES=1
       - HADOOP_NAMENODE_HOST=hdfs-nn
       - HADOOP_DATANODE_PORT=50010
     volumes:
@@ -43,29 +45,6 @@ services:
         aliases:
           - spark-worker-a
           - hdfs-dn-a
-
-  spark-worker-b:
-    build: spark-worker/
-    ports:
-      - "9092:8080"
-      - "7001:7000"
-    depends_on:
-      - spark-master
-    environment:
-      - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKLOAD=worker
-      - SPARK_LOCAL_IP=spark-worker-b
-      - HADOOP_NAMENODE_HOST=hdfs-nn
-      - HADOOP_DATANODE_PORT=50010
-    volumes:
-      - ./apps:/opt/spark-apps
-      - ./data:/opt/spark-data
-      - hdfs-dn-b-data:/hadoop/hdfs/data
-    networks:
-      hadoop:
-        aliases:
-          - spark-worker-b
-          - hdfs-dn-b
 
   hdfs-nn:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
