@@ -8,8 +8,8 @@ services:
     volumes:
       - ./apps:/opt/spark-apps
       - ./data:/opt/spark-data
-      - /home/ubuntu/volume-100a/hdfs-nn-data:/hadoop/hdfs/data
-      - /home/ubuntu/volume-100a/hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
+      - hdfs-nn-data:/hadoop/hdfs/data
+      - hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
     environment:
       - SPARK_WORKLOAD=master
       - SPARK_LOCAL_IP=spark-master
@@ -39,7 +39,7 @@ services:
     volumes:
       - ./apps:/opt/spark-apps
       - ./data:/opt/spark-data
-      - /home/ubuntu/volume-100a/hdfs-dn-a-data:/hadoop/hdfs/data
+      - hdfs-dn-a-data:/hadoop/hdfs/data
     networks:
       hadoop:
         aliases:
@@ -55,8 +55,8 @@ services:
     environment:
       - CLUSTER_NAME=hdfs-cluster
     volumes:
-      - /home/ubuntu/volume-100a/hdfs-nn-data:/hadoop/hdfs/data
-      - /home/ubuntu/volume-100a/hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
+      - hdfs-nn-data:/hadoop/hdfs/data
+      - hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
     networks:
       hadoop:
         aliases:
@@ -70,11 +70,19 @@ services:
       - CORE_CONF_fs_defaultFS=hdfs://hdfs-nn:8020
       - CORE_CONF_hadoop_http_staticuser_user=root
     volumes:
-      - /home/ubuntu/volume-100a/hdfs-dn-a-data:/hadoop/hdfs/data
+      - hdfs-dn-a-data:/hadoop/hdfs/data
     networks:
       hadoop:
         aliases:
           - hdfs-dn-a
+
+volumes:
+  hdfs-dn-a-data:
+    driver: /home/ubuntu/volume-100a/hdfs-dn-a-data
+  hdfs-nn-data:
+    driver: /home/ubuntu/volume-100a/hdfs-nn-data
+  hdfs-nn-checkpoint:
+    driver: /home/ubuntu/volume-100a/hdfs-nn-checkpoint
 
 networks:
   hadoop:
