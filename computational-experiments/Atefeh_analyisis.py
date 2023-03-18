@@ -1,5 +1,9 @@
+from pyspark import SparkConf
+from pyspark import SparkContext
 from pyspark.sql import SparkSession
-import time
+from operator import add
+import json
+from time import time
 spark_session = SparkSession\
         .builder\
         .master("spark://localhost:7077") \
@@ -15,7 +19,7 @@ start = time.time()
 comments_rdd = spark_context.textFile("hdfs://130.238.28.245:9000/RC_2011-08", use_unicode=True)
 edited_id = comments_rdd.map(lambda line: json.loads(line)).map(lambda x: (x['author'], x['edited']))
 list_of_edited_comand_author = edited_id.filter(lambda x: x[1] == True).map(lambda x: x[0])
-list_of_edited_comand_author.take()
+list_of_edited_comand_author.take(5)
 #Stop counting time
 end = time.time()
 
