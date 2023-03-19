@@ -15,4 +15,7 @@ ENV PATH="${PATH}:/usr/local/spark/bin"
 ENV SPARK_HOME="/usr/local/spark"
 ENV SPARK_NO_DAEMONIZE="true"
 
+RUN apt-get -y install python3-pip
+RUN pip install --user -U nltk
+
 CMD ["bash", "-c", "/usr/local/spark/sbin/start-master.sh"]
