@@ -10,7 +10,7 @@ spark_session = SparkSession.builder\
 #Start counting time
 start = time.time()
 
-''''Insert analysis code here:''''
+'''Insert analysis code here:'''
 # A JSON dataset is pointed to by path.
 comments_json = spark_session.read.format('json').load("hdfs://130.238.28.245:9000/RC_2011-08")
 
