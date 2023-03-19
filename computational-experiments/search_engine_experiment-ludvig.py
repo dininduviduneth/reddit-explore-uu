@@ -9,13 +9,14 @@ spark_session = SparkSession.builder\
         .config("spark.cores.max", 4)\
         .getOrCreate()
 
+print('Enter the word you want to search:')
+search_keyword = input()
+
 #Start counting time
 start = time.time()
 
 '''Insert analysis code here:'''
 # Create json dataframe
-print('Enter the word you want to search:')
-search_keyword = input()
 
 comments_json = spark_session.read.format('json').load("hdfs://130.238.28.245:9000/RC_2011-08")
 
