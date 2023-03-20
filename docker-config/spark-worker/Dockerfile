@@ -17,5 +17,6 @@ ENV SPARK_NO_DAEMONIZE="true"
 
 RUN apt-get -y install python3-pip
 RUN pip install --user -U nltk
+RUN python -m nltk.downloader punkt averaged_perceptron_tagger
 
 CMD ["bash", "-c", "/usr/local/spark/sbin/start-worker.sh spark://spark-master:7077"]
