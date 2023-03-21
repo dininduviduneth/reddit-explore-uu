@@ -17,6 +17,6 @@ ENV SPARK_NO_DAEMONIZE="true"
 
 RUN apt-get -y install python3-pip
 RUN pip install --user -U nltk
-RUN python -m nltk.downloader punkt averaged_perceptron_tagger stopwords
+RUN python3 -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger'); nltk.download('stopwords')"
 
 CMD ["bash", "-c", "/usr/local/spark/sbin/start-master.sh"]
