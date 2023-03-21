@@ -11,4 +11,4 @@ The main phases of the project were as follows:
 
 The base architecture we setup looks as follows:
 
-![alt text](https://github.com/[dininduviduneth]/[reddit-explore]/blob/[readme_edit]/images/base-cluster.png?raw=true)
+base-cluster.png
