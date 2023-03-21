@@ -8,8 +8,8 @@ services:
     volumes:
       - ./apps:/opt/spark-apps
       - ./data:/opt/spark-data
-      - /home/ubuntu/volume-100a/hdfs-nn-data:/hadoop/hdfs/data
-      - /home/ubuntu/volume-100a/hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
+      - hdfs-nn-data:/hadoop/hdfs/data
+      - hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
     environment:
       - SPARK_WORKLOAD=master
       - SPARK_LOCAL_IP=spark-master
@@ -31,7 +31,7 @@ services:
     environment:
       - SPARK_MASTER=spark://spark-master:7077
       - SPARK_WORKLOAD=worker
-      - SPARK_LOCAL_IP=spark-worker-a
+      - SPARK_LOCAL_IP=spark-worker
       - SPARK_WORKER_MEMORY=4g
       - SPARK_WORKER_CORES=1
       - HADOOP_NAMENODE_HOST=hdfs-nn
@@ -39,12 +39,12 @@ services:
     volumes:
       - ./apps:/opt/spark-apps
       - ./data:/opt/spark-data
-      - /home/ubuntu/volume-100a/hdfs-dn-a-data:/hadoop/hdfs/data
+      - hdfs-dn-data:/hadoop/hdfs/data
     networks:
       hadoop:
         aliases:
-          - spark-worker-a
-          - hdfs-dn-a
+          - spark-worker
+          - hdfs-dn
 
   hdfs-nn:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
@@ -55,26 +55,30 @@ services:
     environment:
       - CLUSTER_NAME=hdfs-cluster
     volumes:
-      - /home/ubuntu/volume-100a/hdfs-nn-data:/hadoop/hdfs/data
-      - /home/ubuntu/volume-100a/hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
+      - hdfs-nn-data:/hadoop/hdfs/data
+      - hdfs-nn-checkpoint:/hadoop/hdfs/nn_checkpoint
     networks:
       hadoop:
         aliases:
           - hdfs-nn
 
-  hdfs-dn-a:
+  hdfs-dn:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
-    container_name: hdfs-dn-a
+    container_name: hdfs-dn
     environment:
       - CLUSTER_NAME=hdfs-cluster
       - CORE_CONF_fs_defaultFS=hdfs://hdfs-nn:8020
       - CORE_CONF_hadoop_http_staticuser_user=root
     volumes:
-      - /home/ubuntu/volume-100a/hdfs-dn-a-data:/hadoop/hdfs/data
+      - hdfs-dn-data:/hadoop/hdfs/data
     networks:
       hadoop:
         aliases:
-          - hdfs-dn-a
+          - hdfs-dn
+volumes:
+  hdfs-nn-data:
+  hdfs-nn-checkpoint:
+  hdfs-dn-data:
 
 networks:
   hadoop:
