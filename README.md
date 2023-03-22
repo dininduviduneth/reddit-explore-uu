@@ -1,5 +1,14 @@
-# reddit-explore-uu
-In this project we have used comments from reddit to play around with multiple functionalities of Apache Spark, HDFS and Docker. The main objective of the project was to get our hands dirty with setting up containerized clusters of Apache Spark, HDFS using Docker functionalities.
+# REDDIT EXPLORE PROJECT
+In this project we have used comments from reddit to play around with multiple functionalities of Apache Spark, HDFS and Docker. The main objective of the project was to get our hands dirty with setting up containerized clusters of Apache Spark, HDFS using Docker functionalities. This was done as a part of a grading requirement for Data Engineering I course conducted at Uppsala University.
+
+The collaborators of this project are:
+
+* Atefeh Aramian
+* Gabriel Arteaga
+* Dinindu Seneviratne
+* Kim Mathews
+* Tayyab Hasan
+* Ludvig Westerholm
 
 The main phases of the project were as follows:
 
@@ -81,3 +90,35 @@ The base architecture we setup looks as follows:
     docker ps
     ```
     There should be three containers running - one each for `spark-master`, `spark-worker`, `hadoop namenode` and `hadoop datanode`.
+
+### STEP 4: STARTING JUPYTER AND RUNNING ANALYSIS CODE
+
+* Start a Jupyter server
+```
+python3 -m notebook --ip=* --no-browser
+```
+
+* Navigate to `data-analysis` within the `reddit-explore-uu` directory and run the analysis notebooks.
+
+### STEP 5: SCALING
+
+We have used Docker's `docker-compose scale` functionality to autoscale our spark worker nodes. The scaled setup for seven worker nodes looks as follows:
+
+![Scaled Architecture](images/scaled-custer.png)
+
+* To scale the workers by X
+    ```
+    docker-compose scale spark-worker=X
+    ```
+
+### STEP 6: SHUTTING DOWN
+
+* To stop a scaled cluster, first scale down to 1 worker node
+    ```
+    docker-compose scale spark-worker=1
+    ```
+
+* To stop the containers
+    ```
+    docker-compose stop
+    ```
