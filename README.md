@@ -11,4 +11,4 @@ The main phases of the project were as follows:
 
 The base architecture we setup looks as follows:
 
-base-cluster.png
+![Base Architecture](images/base-cluster.png)
