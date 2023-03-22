@@ -3,12 +3,12 @@ In this project we have used comments from reddit to play around with multiple f
 
 The collaborators of this project are:
 
-* Atefeh Aramian
-* Gabriel Arteaga
-* Dinindu Seneviratne
-* Kim Mathews
-* Tayyab Hasan
-* Ludvig Westerholm
+* [Atefeh Aramian](https://github.com/atefeharemian "Atefeh Aramian")
+* [Gabriel Arteaga](https://github.com/Gabriel-Arteaga "Gabriel Arteaga")
+* [Dinindu Seneviratne](https://github.com/dininduviduneth "Dinindu Seneviratne")
+* [Kim Mathews](https://github.com/kimkmathews "Kim Mathews")
+* [Tayyab Hasan](https://github.com/TayyabHasan "Tayyab Hasan")
+* [Ludvig Westerholm](https://github.com/neddul "Ludvig Westerholm")
 
 The main phases of the project were as follows:
 
@@ -70,7 +70,7 @@ The base architecture we setup looks as follows:
     git clone https://github.com/dininduviduneth/reddit-explore-uu.git
     ```
 
-### STEP 3: BUILD DOCKER IMAGED AND START CLUSTER
+### STEP 3: BUILD DOCKER IMAGES AND START CLUSTER
 
 * Build and start the base cluster
 
@@ -91,7 +91,27 @@ The base architecture we setup looks as follows:
     ```
     There should be three containers running - one each for `spark-master`, `spark-worker`, `hadoop namenode` and `hadoop datanode`.
 
-### STEP 4: STARTING JUPYTER AND RUNNING ANALYSIS CODE
+### STEP 4: UPLOADING DATA TO HDFS
+
+* Download the required Reddit dataset to the VM
+    ```
+    wget https://files.pushshift.io/reddit/comments/[REDDIT_DATASET_FILENAME].zst
+    ```
+* Extract the dataset
+    ```
+    unzstd --ultra --memory=2048MB -d [REDDIT_DATASET_FILENAME].zst
+    ```
+* Delete the zipped file
+    ```
+    rm [REDDIT_DATASET_FILENAME].zst
+    ```
+* Push the file to HDFS using `-put` command
+    ```
+    hdfs dfs -put [REDDIT_DATASET_FILENAME] /
+    ```
+* Once uploaded the dataset should be visible at the Web UI of HDFS - `http://[PUBLIC IP OF VM]:9870/`
+
+### STEP 5: STARTING JUPYTER AND RUNNING ANALYSIS CODE
 
 * Start a Jupyter server
 ```
@@ -100,7 +120,7 @@ python3 -m notebook --ip=* --no-browser
 
 * Navigate to `data-analysis` within the `reddit-explore-uu` directory and run the analysis notebooks.
 
-### STEP 5: SCALING
+### STEP 6: SCALING
 
 We have used Docker's `docker-compose scale` functionality to autoscale our spark worker nodes. The scaled setup for seven worker nodes looks as follows:
 
@@ -111,7 +131,7 @@ We have used Docker's `docker-compose scale` functionality to autoscale our spar
     docker-compose scale spark-worker=X
     ```
 
-### STEP 6: SHUTTING DOWN
+### STEP 7: SHUTTING DOWN
 
 * To stop a scaled cluster, first scale down to 1 worker node
     ```
